@@ -1,0 +1,41 @@
+# Policy-as-code for Paytm Resolve. Evaluated by resolve/policy/engine.py, OUTSIDE any prompt.
+# The LLM proposes; this file decides. Every number below is a placeholder to be replaced by Paytm risk owners.
+version: policy-v3
+
+limits:
+  hard_cap_per_action: 250000        # nothing above this is ever auto-executed or approvable by an agent
+  tier1_max_value:                   # per-tool ceiling for "act, notify, one-tap undo"
+    initiate_refund: 5000
+    retry_reversal: 50000
+    release_settlement_hold: 50000
+    reschedule_emi: 500000
+    file_representment: 25000
+    request_documents: 1000000
+    trigger_reverification: 1000000
+    validate_bank_account: 1000000
+    remote_reboot: 1000000
+    dispatch_replacement: 1000000
+  tier2_max_value: 100000            # above this a human cannot approve through the console: Tier 3 handoff
+
+confidence:
+  tier0: 0.90
+  tier1: 0.85
+  tier2: 0.60                        # below this the case is Tier 3 (human only)
+
+reversal_tat_hours: 24               # illustrative; set from the applicable RBI/NPCI TAT framework
+
+action_classes:
+  low_risk: [request_documents, remote_reboot, trigger_reverification, validate_bank_account, retry_reversal, notify_party, create_ticket]
+  money_out: [initiate_refund]
+  money_release: [release_settlement_hold]
+  state_change: [reschedule_emi, file_representment, dispatch_replacement]
+
+categories:                          # autonomy level per workflow; promoted/demoted from the console
+  payment_failed:  {mode: autonomous}
+  duplicate_debit: {mode: autonomous}
+  settlement_held: {mode: autonomous}
+  dispute:         {mode: assisted}  # writes capped at Tier 2 until precision is earned
+  emi_query:       {mode: autonomous}
+  claim_status:    {mode: autonomous}
+  soundbox:        {mode: autonomous}
+  unknown:         {mode: shadow}    # suggest only

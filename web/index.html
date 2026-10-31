@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paytm Resolve · Ops console</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo"><i>R</i><div>Paytm Resolve<small>AUTONOMOUS AI TEAMMATE · OPS CONSOLE</small></div></div>
+    <div class="chips" id="chips"></div>
+    <div class="spacer"></div>
+    <a href="/customer" target="_blank"><button>Open customer app</button></a>
+    <button id="btnReset" class="danger" title="Rebuild the mock Paytm world and clear cases">Reset world</button>
+  </header>
+  <div>
+    <div class="kpis" id="kpis"></div>
+    <nav id="nav">
+      <button data-tab="live" class="active">Live ops</button>
+      <button data-tab="watch">Watchtower</button>
+      <button data-tab="autonomy">Autonomy &amp; policy</button>
+      <button data-tab="ai">AI stack</button>
+      <button data-tab="evals">Evals</button>
+      <button data-tab="systems">Systems</button>
+    </nav>
+  </div>
+  <main>
+    <section class="tab active" id="tab-live">
+      <div class="live">
+        <div class="col" id="colLeft">
+          <div id="launcher"></div>
+          <h3>Case queue</h3>
+          <div id="queue"></div>
+        </div>
+        <div class="col" id="colMid"><div class="empty">Run a scenario on the left, or open the customer app and send a message.<br>Every agent step streams here live.</div></div>
+        <div class="col" id="colRight"><div class="empty">Policy tier, actions, approvals and handoff briefs appear here.</div></div>
+      </div>
+    </section>
+    <section class="tab" id="tab-watch"><div class="pad" id="watch"></div></section>
+    <section class="tab" id="tab-autonomy"><div class="pad" id="autonomy"></div></section>
+    <section class="tab" id="tab-ai"><div class="pad" id="ai"></div></section>
+    <section class="tab" id="tab-evals"><div class="pad" id="evals"></div></section>
+    <section class="tab" id="tab-systems"><div class="pad" id="systems"></div></section>
+  </main>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
